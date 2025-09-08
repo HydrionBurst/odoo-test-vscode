@@ -137,6 +137,7 @@ export class OdooStandardCodeLensProvider implements vscode.CodeLensProvider {
         moduleName: string,
         databaseName: string,
     ) {
+        const addButtonSwitch = Configuration.get("standardTestLayout").length > 1;
         for (const symbol of symbols) {
             if (symbol.kind === vscode.SymbolKind.Class) {
                 const testMethods = symbol.children.filter(
@@ -148,7 +149,7 @@ export class OdooStandardCodeLensProvider implements vscode.CodeLensProvider {
                     continue;
                 }
                 for (const test of [symbol, ...testMethods]) {
-                    if (this._buttons?.length > 1) {
+                    if (addButtonSwitch) {
                         lenses.push(
                             new vscode.CodeLens(test.range, {
                                 title: `$(versions)`,
